@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 19th Birthday, Jonalyn! 🪼</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600;700&family=Lato:wght@300;400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #020d1a;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .ocean-bg {
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, #061d38 0%, #020d1a 65%);
+    z-index: 0;
+  }
+  .caustics {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 160px 80px at 20% 30%, rgba(86,200,245,0.1) 0%, transparent 70%),
+      radial-gradient(ellipse 100px 50px at 75% 55%, rgba(126,232,250,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 120px 60px at 50% 85%, rgba(184,240,255,0.06) 0%, transparent 70%);
+    animation: causticShift 9s ease-in-out infinite alternate;
+  }
+  @keyframes causticShift {
+    0%   { transform: scale(1) translateX(0); opacity: 0.6; }
+    100% { transform: scale(1.18) translateX(22px); opacity: 1; }
+  }
+
+  .bubble {
+    position: fixed; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.45), rgba(86,200,245,0.1));
+    border: 1px solid rgba(126,232,250,0.3);
+    animation: bubbleRise linear infinite; z-index: 1; pointer-events: none;
+  }
+  @keyframes bubbleRise {
+    0%   { transform: translateY(110vh); opacity: 0.6; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+  }
+
+  .jelly-swimmer { position: fixed; z-index: 2; animation: jellyFloat linear infinite; pointer-events: none; }
+  @keyframes jellyFloat {
+    0%   { transform: translateY(110vh) translateX(0);    opacity: 0; }
+    5%   { opacity: 0.9; }
+    90%  { opacity: 0.75; }
+    100% { transform: translateY(-15vh) translateX(28px); opacity: 0; }
+  }
+  @keyframes jellyBob {
+    0%,100% { transform: scaleY(1)    scaleX(1); }
+    50%      { transform: scaleY(0.91) scaleX(1.07); }
+  }
+  .jelly-body { animation: jellyBob 1.5s ease-in-out infinite; transform-origin: bottom center; }
+
+  .confetti-piece { position: fixed; z-index: 100; border-radius: 2px; animation: confettiFall linear forwards; pointer-events: none; }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-20px) rotate(0deg);   opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  .float-emoji { position: fixed; font-size: 22px; animation: emojiFloat linear forwards; pointer-events: none; z-index: 5; }
+  @keyframes emojiFloat {
+    0%   { transform: translateY(0)      rotate(0deg)   scale(0);   opacity: 0; }
+    10%  { transform: translateY(-15px)  rotate(10deg)  scale(1.2); opacity: 1; }
+    90%  { opacity: 0.8; }
+    100% { transform: translateY(-110px) rotate(-12deg) scale(0.8); opacity: 0; }
+  }
+
+  #scene {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px; min-height: 100vh;
+  }
+  .card-container { width: min(420px, 92vw); }
+
+  /* FRONT */
+  .card-front {
+    background: linear-gradient(145deg, #031428 0%, #062240 45%, #041830 100%);
+    border: 1.5px solid rgba(86,200,245,0.45);
+    border-radius: 28px;
+    box-shadow: 0 0 60px rgba(86,200,245,0.22), 0 0 120px rgba(86,200,245,0.09), inset 0 0 40px rgba(86,200,245,0.05);
+    padding: 52px 38px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    min-height: 570px; justify-content: space-between;
+    cursor: pointer; transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: cardBreath 4s ease-in-out infinite;
+    position: relative; overflow: hidden;
+  }
+  .card-front:hover {
+    transform: translateY(-5px) scale(1.012);
+    box-shadow: 0 10px 90px rgba(86,200,245,0.35), 0 0 150px rgba(86,200,245,0.14), inset 0 0 50px rgba(86,200,245,0.08);
+  }
+  @keyframes cardBreath {
+    0%,100% { box-shadow: 0 0 60px rgba(86,200,245,0.22), 0 0 120px rgba(86,200,245,0.09), inset 0 0 40px rgba(86,200,245,0.05); }
+    50%      { box-shadow: 0 0 85px rgba(86,200,245,0.38), 0 0 170px rgba(86,200,245,0.16), inset 0 0 65px rgba(86,200,245,0.09); }
+  }
+
+  .front-stars { position: absolute; inset: 0; pointer-events: none; border-radius: 28px; overflow: hidden; }
+  .star { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: white; animation: starTwinkle ease-in-out infinite; }
+  @keyframes starTwinkle {
+    0%,100% { opacity: 0.1; transform: scale(0.5); }
+    50%      { opacity: 1;   transform: scale(1.6); }
+  }
+
+  .front-tag { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #b8f0ff; opacity: 0.8; }
+
+  .front-jelly-wrap { position: relative; width: 165px; height: 165px; display: flex; align-items: center; justify-content: center; }
+  .front-jelly-glow {
+    position: absolute; inset: -25px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(86,200,245,0.4) 0%, transparent 70%);
+    animation: glowPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes glowPulse {
+    0%,100% { transform: scale(1);    opacity: 0.8; }
+    50%      { transform: scale(1.22); opacity: 1; }
+  }
+  .front-jelly {
+    width: 135px; height: 135px;
+    animation: jellyBob 2.1s ease-in-out infinite;
+    filter: drop-shadow(0 0 22px rgba(86,200,245,0.8)) drop-shadow(0 0 44px rgba(126,232,250,0.4));
+  }
+
+  .front-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(40px, 9.5vw, 54px); font-weight: 700; line-height: 1.1;
+    background: linear-gradient(135deg, #fff 0%, #b8f0ff 40%, #56c8f5 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    animation: titleShimmer 3s ease-in-out infinite;
+  }
+  @keyframes titleShimmer {
+    0%,100% { filter: brightness(1);   }
+    50%      { filter: brightness(1.22); }
+  }
+  .front-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(14px, 4vw, 22px); font-style: italic;
+    color: #7ee8fa;
+    text-shadow: 0 0 30px rgba(126,232,250,0.6);
+    animation: nameFloat 3s ease-in-out infinite;
+    word-break: break-word;
+  }
+  @keyframes nameFloat {
+    0%,100% { transform: translateY(0);   }
+    50%      { transform: translateY(-5px); }
+  }
+  .front-hint { font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 2px; animation: hintBlink 2s ease-in-out infinite; }
+  @keyframes hintBlink {
+    0%,100% { opacity: 0.3; }
+    50%      { opacity: 0.75; }
+  }
+
+  /* INSIDE */
+  .card-inside {
+    display: none;
+    background: linear-gradient(160deg, #031428 0%, #062240 55%, #041830 100%);
+    border: 1.5px solid rgba(86,200,245,0.35);
+    border-radius: 28px;
+    box-shadow: 0 0 80px rgba(86,200,245,0.28), 0 22px 65px rgba(0,0,0,0.5);
+    padding: clamp(24px, 5vw, 40px) clamp(18px, 5vw, 32px);
+    flex-direction: column; align-items: center;
+    animation: insideReveal 0.75s cubic-bezier(0.23,1,0.32,1) forwards;
+    width: 100%;
+  }
+  @keyframes insideReveal {
+    from { opacity: 0; transform: scale(0.94) translateY(12px); }
+    to   { opacity: 1; transform: scale(1)    translateY(0); }
+  }
+
+  .inside-scroll {
+    max-height: 88vh; overflow-y: auto; width: 100%;
+    display: flex; flex-direction: column; align-items: center; gap: 26px; padding: 2px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .inside-scroll::-webkit-scrollbar { display: none; }
+
+  .inside-jelly { width: 88px; height: 88px; animation: jellyBob 1.9s ease-in-out infinite; filter: drop-shadow(0 0 16px rgba(86,200,245,0.75)); }
+
+  .inside-heading {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(30px, 7.5vw, 42px); font-weight: 700; text-align: center;
+    background: linear-gradient(135deg, #fff 0%, #b8f0ff 50%, #56c8f5 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    line-height: 1.2;
+  }
+
+  .inside-message {
+    font-family: 'Playfair Display', serif;
+    font-size: 14.5px; line-height: 1.9;
+    color: rgba(255,255,255,0.82); text-align: center; font-style: italic;
+  }
+  .inside-message strong { color: #7ee8fa; font-style: normal; }
+
+  .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(86,200,245,0.5), transparent); }
+
+  /* COUPON LINK */
+  .coupon-link {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    text-decoration: none;
+    background: linear-gradient(135deg, #031c34, #063050);
+    border: 2px dashed rgba(86,200,245,0.5);
+    border-radius: 20px; padding: 22px 28px; width: 100%;
+    cursor: pointer; transition: all 0.25s ease;
+    position: relative; overflow: hidden;
+  }
+  .coupon-link::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(86,200,245,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .coupon-link:hover {
+    transform: translateY(-3px) scale(1.02);
+    border-color: #7ee8fa;
+    box-shadow: 0 8px 40px rgba(126,232,250,0.2);
+  }
+  .coupon-link-eyebrow { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #b8f0ff; opacity: 0.75; }
+  .coupon-link-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(20px, 5vw, 26px); font-weight: 700; color: white;
+    text-shadow: 0 0 20px rgba(86,200,245,0.55); text-align: center;
+  }
+  .coupon-link-sub { font-size: 11px; color: rgba(255,255,255,0.4); font-style: italic; }
+  .coupon-link-arrow { font-size: 13px; color: #7ee8fa; letter-spacing: 1px; animation: arrowBounce 1.6s ease-in-out infinite; }
+  @keyframes arrowBounce {
+    0%,100% { transform: translateX(0);  }
+    50%      { transform: translateX(5px); }
+  }
+  .coupon-stamp {
+    position: absolute; top: 12px; right: 14px;
+    width: 42px; height: 42px;
+    border: 2px solid rgba(126,232,250,0.45); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; transform: rotate(15deg);
+    animation: stampBob 3s ease-in-out infinite;
+  }
+  @keyframes stampBob {
+    0%,100% { transform: rotate(15deg) scale(1);   }
+    50%      { transform: rotate(15deg) scale(1.1); }
+  }
+
+  .sign-off { font-family: 'Dancing Script', cursive; font-size: 18px; color: rgba(86,200,245,0.6); text-align: center; padding-bottom: 6px; }
+
+  .card-container.opening .card-front { animation: openFlip 0.85s cubic-bezier(0.68,-0.55,0.27,1.55) forwards; }
+  @keyframes openFlip {
+    0%   { transform: rotateY(0deg)    scale(1);    opacity: 1; }
+    45%  { transform: rotateY(-90deg)  scale(0.94); opacity: 0.4; }
+    65%  { transform: rotateY(-90deg)  scale(0.94); opacity: 0; }
+    100% { transform: rotateY(-180deg) scale(0.9);  opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ocean-bg"><div class="caustics"></div></div>
+
+<!--
+  ══════════════════════════════════════════
+  🎵 BACKGROUND MUSIC
+  Replace src with your direct .mp3 URL
+  Example: src="https://example.com/song.mp3"
+  ══════════════════════════════════════════
+-->
+<audio id="bgAudio" loop preload="auto">
+  <source src="YOUR_SONG_URL_HERE.mp3" type="audio/mpeg">
+</audio>
+
+<div id="scene">
+  <div class="card-container" id="cardContainer">
+
+    <!-- FRONT -->
+    <div class="card-front" id="cardFront" onclick="openCard()">
+      <div class="front-stars" id="frontStars"></div>
+      <div class="front-tag">✦ for you ✦</div>
+
+      <div class="front-jelly-wrap">
+        <div class="front-jelly-glow"></div>
+        <svg class="front-jelly" viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="jbg1" cx="50%" cy="40%" r="60%">
+              <stop offset="0%"   stop-color="#c8f0ff"/>
+              <stop offset="55%"  stop-color="#29b6e8"/>
+              <stop offset="100%" stop-color="#024f7a"/>
+            </radialGradient>
+            <radialGradient id="jin1" cx="40%" cy="35%" r="50%">
+              <stop offset="0%"   stop-color="rgba(255,255,255,0.5)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+            </radialGradient>
+          </defs>
+          <g class="jelly-body">
+            <ellipse cx="65" cy="52" rx="43" ry="37" fill="url(#jbg1)" opacity="0.95"/>
+            <ellipse cx="65" cy="52" rx="43" ry="37" fill="url(#jin1)"/>
+            <path d="M 22 52 Q 30 76 65 79 Q 100 76 108 52" fill="rgba(150,230,255,0.35)" stroke="rgba(180,240,255,0.55)" stroke-width="1"/>
+            <ellipse cx="50" cy="43" rx="10" ry="6" fill="rgba(255,255,255,0.22)"/>
+            <ellipse cx="72" cy="38" rx="6"  ry="4" fill="rgba(255,255,255,0.15)"/>
+            <path d="M 42 77 Q 35 92 39 110" fill="none" stroke="rgba(100,210,255,0.8)"  stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 53 79 Q 49 96 52 112" fill="none" stroke="rgba(80,190,245,0.7)"   stroke-width="2"   stroke-linecap="round"/>
+            <path d="M 65 80 Q 65 97 65 115" fill="none" stroke="rgba(140,225,255,0.85)" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 77 79 Q 81 96 78 112" fill="none" stroke="rgba(80,190,245,0.7)"   stroke-width="2"   stroke-linecap="round"/>
+            <path d="M 88 77 Q 95 92 91 110" fill="none" stroke="rgba(100,210,255,0.8)"  stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="55" cy="52" r="4"   fill="rgba(255,255,255,0.92)"/>
+            <circle cx="75" cy="52" r="4"   fill="rgba(255,255,255,0.92)"/>
+            <circle cx="56" cy="52" r="2"   fill="#024f7a"/>
+            <circle cx="76" cy="52" r="2"   fill="#024f7a"/>
+            <circle cx="55.5" cy="51" r="1" fill="white"/>
+            <circle cx="75.5" cy="51" r="1" fill="white"/>
+            <path d="M 58 60 Q 65 66 72 60" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+
+      <div>
+        <div class="front-title">Happy 19th<br>Birthday!!!!!!</div>
+        <div class="front-name">JONALYN GRACE A. PEÑONAL 🪼</div>
+      </div>
+
+      <div class="front-hint">✦ open me up ✦</div>
+    </div>
+
+    <!-- INSIDE -->
+    <div class="card-inside" id="cardInside">
+      <div class="inside-scroll">
+
+        <svg class="inside-jelly" viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="jbg2" cx="50%" cy="40%" r="60%">
+              <stop offset="0%"   stop-color="#e0f8ff"/>
+              <stop offset="55%"  stop-color="#56c8f5"/>
+              <stop offset="100%" stop-color="#024f7a"/>
+            </radialGradient>
+            <radialGradient id="jin2" cx="40%" cy="35%" r="50%">
+              <stop offset="0%"   stop-color="rgba(255,255,255,0.45)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+            </radialGradient>
+          </defs>
+          <g class="jelly-body">
+            <ellipse cx="65" cy="52" rx="43" ry="37" fill="url(#jbg2)" opacity="0.95"/>
+            <ellipse cx="65" cy="52" rx="43" ry="37" fill="url(#jin2)"/>
+            <path d="M 22 52 Q 30 76 65 79 Q 100 76 108 52" fill="rgba(150,230,255,0.3)" stroke="rgba(180,245,255,0.5)" stroke-width="1"/>
+            <ellipse cx="50" cy="43" rx="10" ry="6" fill="rgba(255,255,255,0.22)"/>
+            <path d="M 42 77 Q 35 92 39 110" fill="none" stroke="rgba(100,210,255,0.8)"  stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 53 79 Q 49 96 52 112" fill="none" stroke="rgba(80,190,245,0.7)"   stroke-width="2"   stroke-linecap="round"/>
+            <path d="M 65 80 Q 65 97 65 115" fill="none" stroke="rgba(140,225,255,0.85)" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 77 79 Q 81 96 78 112" fill="none" stroke="rgba(80,190,245,0.7)"   stroke-width="2"   stroke-linecap="round"/>
+            <path d="M 88 77 Q 95 92 91 110" fill="none" stroke="rgba(100,210,255,0.8)"  stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="55" cy="52" r="4"   fill="rgba(255,255,255,0.92)"/>
+            <circle cx="75" cy="52" r="4"   fill="rgba(255,255,255,0.92)"/>
+            <circle cx="56" cy="52" r="2"   fill="#024f7a"/>
+            <circle cx="76" cy="52" r="2"   fill="#024f7a"/>
+            <circle cx="55.5" cy="51" r="1" fill="white"/>
+            <circle cx="75.5" cy="51" r="1" fill="white"/>
+            <path d="M 58 60 Q 65 66 72 60" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+        </svg>
+
+        <div class="inside-heading">CONGRATS ON TURNING 19,<br>SWEETIEEE 🎉</div>
+
+        <div class="inside-message">
+          Every year with you feels like drifting through the cold ocean waves,<br>
+          <strong>enjoyable, relaxing and is really lovely.</strong><br><br>
+          You light up every room you're in, and you light up my life,<br>
+          like a jellyfish in the dark sea. You're endlessly beautiful,<br>
+          silly and playful in the best way possible,<br>
+          and the person I want floating by my side every single day. :3<br><br>
+          Congratulations for the 19 years of <strong>you</strong> and all the lovely<br>
+          ridiculous, exciting experiences we have yet to experience together my love. 🪼💙
+        </div>
+
+        <div class="divider"></div>
+
+        <a class="coupon-link" href="coupon.html" target="_blank">
+          <div class="coupon-stamp">🪼</div>
+          <div class="coupon-link-eyebrow">✦ official coupon ✦</div>
+          <div class="coupon-link-title">Make Kyle Do Anything Coupon</div>
+          <div class="coupon-link-sub">3 uses · no expiry · no take-backs</div>
+          <div class="coupon-link-arrow">Open your coupon →</div>
+        </a>
+
+        <div class="sign-off">with all the love in the world, Kyle 🪼</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Stars
+  const starsEl = document.getElementById('frontStars');
+  for (let i=0;i<38;i++){
+    const s=document.createElement('div'); s.className='star';
+    s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%';
+    s.style.animationDuration=(1.5+Math.random()*3)+'s';
+    s.style.animationDelay=(Math.random()*3)+'s';
+    starsEl.appendChild(s);
+  }
+
+  // Bubbles
+  function spawnBubble(){
+    const b=document.createElement('div'); b.className='bubble';
+    const sz=4+Math.random()*14;
+    b.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;bottom:-20px;animation-duration:${7+Math.random()*11}s;animation-delay:${Math.random()*2}s;opacity:${0.25+Math.random()*0.45};`;
+    document.body.appendChild(b); setTimeout(()=>b.remove(),20000);
+  }
+  setInterval(spawnBubble,750);
+
+  // Sky-blue jellyfish swimmers
+  const jColors=[
+    ['#c8f0ff','#29b6e8','#024f7a','rgba(100,210,255,0.8)'],
+    ['#e0f8ff','#56c8f5','#02608a','rgba(126,232,250,0.8)'],
+    ['#b0eaff','#0ea5e9','#013d60','rgba(80,190,240,0.8)'],
+  ];
+  function spawnJelly(){
+    const el=document.createElement('div'); el.className='jelly-swimmer';
+    const sz=38+Math.random()*58;
+    const [c1,c2,c3,tc]=jColors[Math.floor(Math.random()*3)];
+    const id='g'+Math.random().toString(36).slice(2);
+    el.innerHTML=`<svg viewBox="0 0 130 130" width="${sz}" height="${sz}" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="${id}" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="${c1}"/><stop offset="55%" stop-color="${c2}"/><stop offset="100%" stop-color="${c3}"/></radialGradient></defs><g class="jelly-body"><ellipse cx="65" cy="52" rx="43" ry="37" fill="url(#${id})" opacity="0.9"/><ellipse cx="50" cy="43" rx="10" ry="6" fill="rgba(255,255,255,0.2)"/><path d="M 22 52 Q 30 76 65 79 Q 100 76 108 52" fill="${c1}44" stroke="${c1}88" stroke-width="1"/><path d="M 42 77 Q 35 93 39 111" fill="none" stroke="${tc}" stroke-width="2" stroke-linecap="round"/><path d="M 55 79 Q 51 97 53 113" fill="none" stroke="${tc}" stroke-width="2" stroke-linecap="round"/><path d="M 65 80 Q 65 98 65 114" fill="none" stroke="${tc}" stroke-width="2.5" stroke-linecap="round"/><path d="M 75 79 Q 79 97 77 113" fill="none" stroke="${tc}" stroke-width="2" stroke-linecap="round"/><path d="M 88 77 Q 95 93 91 111" fill="none" stroke="${tc}" stroke-width="2" stroke-linecap="round"/><circle cx="55" cy="52" r="3.5" fill="rgba(255,255,255,0.9)"/><circle cx="75" cy="52" r="3.5" fill="rgba(255,255,255,0.9)"/><circle cx="56" cy="52" r="1.8" fill="${c3}"/><circle cx="76" cy="52" r="1.8" fill="${c3}"/><path d="M 59 59 Q 65 64 71 59" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/></g></svg>`;
+    el.style.left=(5+Math.random()*85)+'%'; el.style.bottom='-150px';
+    const dur=14+Math.random()*18; el.style.animationDuration=dur+'s'; el.style.animationDelay=(Math.random()*3)+'s'; el.style.opacity=0.45+Math.random()*0.55;
+    document.body.appendChild(el); setTimeout(()=>el.remove(),(dur+5)*1000);
+  }
+  setInterval(spawnJelly,2600); [0,700,1400].forEach(d=>setTimeout(spawnJelly,d));
+
+  // Confetti — sky blue palette
+  const cColors=['#56c8f5','#7ee8fa','#b8f0ff','#ffffff','#29b6e8','#0ea5e9','#e0f8ff'];
+  function launchConfetti(n=80){
+    for(let i=0;i<n;i++) setTimeout(()=>{
+      const c=document.createElement('div'); c.className='confetti-piece';
+      const sz=6+Math.random()*10;
+      c.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:-20px;background:${cColors[Math.floor(Math.random()*cColors.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${2.5+Math.random()*3}s;animation-delay:${Math.random()*0.8}s;transform:rotate(${Math.random()*360}deg);`;
+      document.body.appendChild(c); setTimeout(()=>c.remove(),6000);
+    },i*28);
+  }
+
+  // Float emojis
+  const emojis=['🪼','💙','🎉','✨','🌊','💫','🎂','🥂','❄️'];
+  function spawnEmoji(){
+    const el=document.createElement('div'); el.className='float-emoji';
+    el.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.left=(10+Math.random()*80)+'%'; el.style.bottom=(10+Math.random()*30)+'%';
+    el.style.animationDuration=(2+Math.random()*2)+'s';
+    document.body.appendChild(el); setTimeout(()=>el.remove(),4500);
+  }
+
+  // Open card
+  let opened=false;
+  function openCard(){
+    if(opened)return; opened=true;
+    document.getElementById('cardContainer').classList.add('opening');
+    launchConfetti(110);
+    setTimeout(()=>{
+      document.getElementById('cardFront').style.display='none';
+      document.getElementById('cardInside').style.display='flex';
+      launchConfetti(65);
+      const audio=document.getElementById('bgAudio');
+      audio.volume=0.7;
+      audio.play().catch(()=>document.addEventListener('click',()=>audio.play(),{once:true}));
+      setInterval(spawnEmoji,1300);
+    },520);
+  }
+</script>
+</body>
+</html>

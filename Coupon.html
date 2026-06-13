@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kyle's Coupon 🪼</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600;700&family=Lato:wght@300;400;700&family=Special+Elite&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #020d1a;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 32px 16px; font-family: 'Lato', sans-serif; overflow-x: hidden;
+  }
+
+  .ocean-bg {
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse at 50% 20%, #061d38 0%, #020d1a 65%);
+    z-index: 0;
+  }
+  .caustics {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 200px 100px at 15% 25%, rgba(86,200,245,0.09)  0%, transparent 70%),
+      radial-gradient(ellipse 140px 70px  at 80% 60%, rgba(126,232,250,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 160px 80px  at 50% 90%, rgba(184,240,255,0.05) 0%, transparent 70%);
+    animation: causticShift 10s ease-in-out infinite alternate;
+  }
+  @keyframes causticShift {
+    0%   { transform: scale(1) translateX(0);   opacity: 0.7; }
+    100% { transform: scale(1.2) translateX(25px); opacity: 1; }
+  }
+
+  .bubble {
+    position: fixed; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), rgba(86,200,245,0.08));
+    border: 1px solid rgba(126,232,250,0.25);
+    animation: bubbleRise linear infinite; z-index: 1; pointer-events: none;
+  }
+  @keyframes bubbleRise {
+    0%   { transform: translateY(110vh); opacity: 0.55; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+  }
+
+  .jelly-swimmer { position: fixed; z-index: 2; animation: jellyFloat linear infinite; pointer-events: none; }
+  @keyframes jellyFloat {
+    0%   { transform: translateY(110vh) translateX(0);    opacity: 0; }
+    5%   { opacity: 0.85; }
+    90%  { opacity: 0.7; }
+    100% { transform: translateY(-15vh) translateX(25px); opacity: 0; }
+  }
+  @keyframes jellyBob {
+    0%,100% { transform: scaleY(1)    scaleX(1); }
+    50%      { transform: scaleY(0.91) scaleX(1.07); }
+  }
+  .jelly-body { animation: jellyBob 1.6s ease-in-out infinite; transform-origin: bottom center; }
+
+  .page-content {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; gap: 28px;
+    width: 100%; max-width: 520px;
+  }
+
+  .page-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(22px, 5vw, 30px); font-weight: 700;
+    color: rgba(86,200,245,0.65); letter-spacing: 1px; text-align: center;
+  }
+
+  /* ── THE COUPON ── */
+  .coupon {
+    width: 100%; position: relative;
+    filter: drop-shadow(0 12px 50px rgba(86,200,245,0.25)) drop-shadow(0 4px 20px rgba(0,0,0,0.6));
+    animation: couponFloat 4s ease-in-out infinite;
+  }
+  @keyframes couponFloat {
+    0%,100% { transform: translateY(0)   rotate(-0.3deg); }
+    50%      { transform: translateY(-6px) rotate(0.3deg); }
+  }
+
+  .coupon-inner {
+    background: #f0faff;
+    border-radius: 16px; overflow: hidden; position: relative;
+    -webkit-mask:
+      radial-gradient(circle at 0%   50%, transparent 22px, white 23px),
+      radial-gradient(circle at 100% 50%, transparent 22px, white 23px);
+    -webkit-mask-composite: destination-in;
+    mask:
+      radial-gradient(circle at 0%   50%, transparent 22px, white 23px),
+      radial-gradient(circle at 100% 50%, transparent 22px, white 23px);
+    mask-composite: intersect;
+  }
+
+  /* TOP BAND */
+  .coupon-band {
+    background: linear-gradient(135deg, #024f7a 0%, #0ea5e9 50%, #56c8f5 100%);
+    padding: 22px 28px 18px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    position: relative; overflow: hidden;
+  }
+  .coupon-band::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% -10%, rgba(255,255,255,0.18) 0%, transparent 60%);
+  }
+  .band-jelly { width: 60px; height: 60px; filter: drop-shadow(0 0 12px rgba(255,255,255,0.5)); animation: jellyBob 2s ease-in-out infinite; }
+  .band-eyebrow { font-size: 9px; letter-spacing: 5px; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+  .band-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(28px, 7vw, 40px); font-weight: 700; color: #fff;
+    text-shadow: 0 2px 20px rgba(0,80,140,0.4);
+    text-align: center; line-height: 1.1;
+  }
+  .band-sub { font-size: 11px; color: rgba(255,255,255,0.6); letter-spacing: 1px; font-style: italic; }
+
+  /* ZIGZAG TEAR */
+  .coupon-tear {
+    width: 100%; height: 18px; display: block; background: #f0faff;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='18'%3E%3Cpath d='M0 0 L5 18 L10 0 L15 18 L20 0 L25 18 L30 0 L35 18 L40 0 L40 18 L0 18Z' fill='black'/%3E%3C/svg%3E") repeat-x;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='18'%3E%3Cpath d='M0 0 L5 18 L10 0 L15 18 L20 0 L25 18 L30 0 L35 18 L40 0 L40 18 L0 18Z' fill='black'/%3E%3C/svg%3E") repeat-x;
+    margin-top: -1px; position: relative; z-index: 2;
+  }
+
+  /* BODY */
+  .coupon-body {
+    background: #f0faff;
+    padding: 24px 28px 28px;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+
+  .coupon-dotted { width: 100%; border: none; border-top: 2px dashed #7dd8f5; }
+
+  .entitles-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .entitles-label { font-family: 'Special Elite', monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #0369a1; }
+  .entitles-name  { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; font-style: italic; color: #012a44; }
+
+  .to-do { text-align: center; }
+  .to-do-top { font-family: 'Special Elite', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #0284c7; }
+  .to-do-big {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(34px, 8vw, 50px); font-weight: 700;
+    color: #012a44; line-height: 1;
+    text-shadow: 2px 2px 0 rgba(86,200,245,0.25);
+  }
+  .to-do-sub { font-family: 'Lato', sans-serif; font-size: 11px; color: #0369a1; letter-spacing: 1px; font-style: italic; }
+
+  /* BOXES */
+  .boxes-section { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+  .boxes-label { font-family: 'Special Elite', monospace; font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #0284c7; text-align: center; }
+  .boxes-row { display: flex; justify-content: center; gap: 20px; }
+  .box-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+  .coupon-box {
+    width: 62px; height: 62px;
+    border: 2.5px solid #29b6e8; border-radius: 10px; background: #fff;
+    cursor: pointer; position: relative; transition: all 0.2s ease;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: inset 0 1px 4px rgba(0,0,0,0.06), 0 2px 8px rgba(41,182,232,0.18);
+    overflow: visible;
+  }
+  .coupon-box:hover:not(.used) {
+    border-color: #0ea5e9; background: #e8f8ff;
+    transform: scale(1.07);
+    box-shadow: 0 4px 20px rgba(14,165,233,0.28);
+  }
+  .coupon-box.used { cursor: default; border-color: rgba(41,182,232,0.35); background: #f5fcff; }
+  .coupon-box.used:hover { transform: none; }
+
+  .box-num { font-family: 'Special Elite', monospace; font-size: 9px; color: #0284c7; letter-spacing: 1px; }
+
+  /* SCRIBBLE X */
+  .scribble-x { position: absolute; inset: -8px; overflow: visible; pointer-events: none; }
+  .scribble-path-1, .scribble-path-2 {
+    fill: none; stroke: #0284c7; stroke-width: 4; stroke-linecap: round;
+    stroke-dasharray: 130; stroke-dashoffset: 130;
+    filter: drop-shadow(0 0 3px rgba(2,132,199,0.5));
+  }
+  .coupon-box.used .scribble-path-1 { animation: drawX 0.38s cubic-bezier(0.23,1,0.32,1) forwards; }
+  .coupon-box.used .scribble-path-2 { animation: drawX 0.38s cubic-bezier(0.23,1,0.32,1) 0.22s forwards; }
+  @keyframes drawX {
+    from { stroke-dashoffset: 130; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  /* FINE PRINT + SEAL */
+  .fine-print-row { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; gap: 12px; flex-wrap: wrap; }
+  .fine-print { font-family: 'Special Elite', monospace; font-size: 9px; color: #0369a1; line-height: 1.7; max-width: 240px; }
+  .fine-print strong { color: #024f7a; }
+
+  .coupon-seal { display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0; }
+  .seal-circle {
+    width: 64px; height: 64px;
+    border: 3px solid #29b6e8; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+    transform: rotate(-12deg);
+    animation: sealBob 4s ease-in-out infinite;
+    background: #f0faff;
+    box-shadow: inset 0 0 0 1.5px #7dd8f5, 0 2px 10px rgba(41,182,232,0.2);
+  }
+  @keyframes sealBob {
+    0%,100% { transform: rotate(-12deg) scale(1);   }
+    50%      { transform: rotate(-12deg) scale(1.07); }
+  }
+  .seal-emoji { font-size: 22px; }
+  .seal-text { font-family: 'Special Elite', monospace; font-size: 6px; letter-spacing: 1.5px; text-transform: uppercase; color: #0369a1; text-align: center; line-height: 1.3; }
+
+  /* BOTTOM STRIP */
+  .coupon-bottom-strip {
+    background: linear-gradient(135deg, #024f7a, #0ea5e9);
+    padding: 10px 28px;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  }
+  .strip-text { font-family: 'Special Elite', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.75); }
+  .strip-barcode { display: flex; gap: 2px; align-items: flex-end; height: 22px; }
+  .bar { background: rgba(255,255,255,0.65); border-radius: 1px; width: 2px; }
+
+  .back-link { font-size: 12px; color: rgba(86,200,245,0.5); text-decoration: none; letter-spacing: 1px; transition: color 0.2s; }
+  .back-link:hover { color: rgba(86,200,245,0.9); }
+
+  .toast {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: linear-gradient(135deg, #024f7a, #0ea5e9);
+    color: white; font-family: 'Dancing Script', cursive; font-size: 18px;
+    padding: 12px 28px; border-radius: 50px;
+    box-shadow: 0 8px 30px rgba(14,165,233,0.4);
+    opacity: 0; pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+    z-index: 200; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="ocean-bg"><div class="caustics"></div></div>
+<div class="toast" id="toast">Use redeemed! you better not make me do anything embarassing....</div>
+
+<div class="page-content">
+
+  <div class="page-title">Your official certificate, Jonalyn 🪼</div>
+
+  <div class="coupon">
+    <div class="coupon-inner">
+
+      <!-- BAND -->
+      <div class="coupon-band">
+        <svg class="band-jelly" viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="bjg" cx="50%" cy="40%" r="60%">
+              <stop offset="0%"   stop-color="#e0f8ff"/>
+              <stop offset="55%"  stop-color="#56c8f5"/>
+              <stop offset="100%" stop-color="#024f7a"/>
+            </radialGradient>
+            <radialGradient id="bjin" cx="40%" cy="35%" r="50%">
+              <stop offset="0%"   stop-color="rgba(255,255,255,0.5)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+            </radialGradient>
+          </defs>
+          <g class="jelly-body">
+            <ellipse cx="65" cy="52" rx="43" ry="37" fill="url(#bjg)" opacity="0.95"/>
+            <ellipse cx="65" cy="52" rx="43" ry="37" fill="url(#bjin)"/>
+            <path d="M 22 52 Q 30 76 65 79 Q 100 76 108 52" fill="rgba(150,230,255,0.35)" stroke="rgba(200,245,255,0.5)" stroke-width="1"/>
+            <ellipse cx="50" cy="43" rx="10" ry="6" fill="rgba(255,255,255,0.25)"/>
+            <path d="M 42 77 Q 35 92 39 110" fill="none" stroke="rgba(100,210,255,0.85)" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 53 79 Q 49 96 52 112" fill="none" stroke="rgba(80,190,245,0.75)"  stroke-width="2"   stroke-linecap="round"/>
+            <path d="M 65 80 Q 65 97 65 115" fill="none" stroke="rgba(140,230,255,0.9)"  stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M 77 79 Q 81 96 78 112" fill="none" stroke="rgba(80,190,245,0.75)"  stroke-width="2"   stroke-linecap="round"/>
+            <path d="M 88 77 Q 95 92 91 110" fill="none" stroke="rgba(100,210,255,0.85)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="55" cy="52" r="4"   fill="rgba(255,255,255,0.92)"/>
+            <circle cx="75" cy="52" r="4"   fill="rgba(255,255,255,0.92)"/>
+            <circle cx="56" cy="52" r="2"   fill="#024f7a"/>
+            <circle cx="76" cy="52" r="2"   fill="#024f7a"/>
+            <circle cx="55.5" cy="51" r="1" fill="white"/>
+            <circle cx="75.5" cy="51" r="1" fill="white"/>
+            <path d="M 58 60 Q 65 66 72 60" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="band-eyebrow">✦ official certificate of obligation ✦</div>
+        <div class="band-title">Make Kyle Do<br>Anything</div>
+        <div class="band-sub">issued with love · non-transferable</div>
+      </div>
+
+      <div class="coupon-tear"></div>
+
+      <!-- BODY -->
+      <div class="coupon-body">
+
+        <hr class="coupon-dotted">
+
+        <div class="entitles-row">
+          <span class="entitles-label">This coupon entitles</span>
+          <span class="entitles-name">Jonalyn Grace A. Peñonal</span>
+          <span class="entitles-label">to make</span>
+          <span class="entitles-name">Kyle Denver Gomez</span>
+        </div>
+
+        <div class="to-do">
+          <div class="to-do-top">do absolutely</div>
+          <div class="to-do-big">Anything.</div>
+          <div class="to-do-sub">no questions asked · no excuses accepted · ever</div>
+        </div>
+
+        <hr class="coupon-dotted">
+
+        <div class="boxes-section">
+          <div class="boxes-label">✦ redeem one box per use ✦</div>
+          <div class="boxes-row">
+            <div class="box-wrap">
+              <div class="coupon-box" id="box1" onclick="tickBox(1)">
+                <svg class="scribble-x" viewBox="0 0 78 78">
+                  <path class="scribble-path-1" d="M 10 14 Q 24 10 39 39 Q 54 68 68 64"/>
+                  <path class="scribble-path-2" d="M 68 14 Q 54 10 39 39 Q 24 68 10 64"/>
+                </svg>
+              </div>
+              <div class="box-num">USE #1</div>
+            </div>
+            <div class="box-wrap">
+              <div class="coupon-box" id="box2" onclick="tickBox(2)">
+                <svg class="scribble-x" viewBox="0 0 78 78">
+                  <path class="scribble-path-1" d="M 10 14 Q 24 10 39 39 Q 54 68 68 64"/>
+                  <path class="scribble-path-2" d="M 68 14 Q 54 10 39 39 Q 24 68 10 64"/>
+                </svg>
+              </div>
+              <div class="box-num">USE #2</div>
+            </div>
+            <div class="box-wrap">
+              <div class="coupon-box" id="box3" onclick="tickBox(3)">
+                <svg class="scribble-x" viewBox="0 0 78 78">
+                  <path class="scribble-path-1" d="M 10 14 Q 24 10 39 39 Q 54 68 68 64"/>
+                  <path class="scribble-path-2" d="M 68 14 Q 54 10 39 39 Q 24 68 10 64"/>
+                </svg>
+              </div>
+              <div class="box-num">USE #3</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="coupon-dotted">
+
+        <div class="fine-print-row">
+          <div class="fine-print">
+            <strong>TERMS &amp; CONDITIONS:</strong><br>
+            · Kyle cannot say no unless absolutely not possible or illegal.<br>
+            · Valid for any request, big or small, silly or serious.<br>
+            · No expiry date. No exceptions. No refunds.<br>
+            · Issued with love on Jonalyn's 19th Birthday.<br>
+            · One box per redemption. Scribble to claim.<br>
+            · Request must be inline with Kyle's financial situation.<br>
+            · Kyle cannot do anything that would cause him to get arrested or homeless.
+          </div>
+          <div class="coupon-seal">
+            <div class="seal-circle">
+              <div class="seal-emoji">🪼</div>
+              <div class="seal-text">Kyle's<br>Promise</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM STRIP -->
+      <div class="coupon-bottom-strip">
+        <div class="strip-text">JONALYN · 19TH BDAY · 2026</div>
+        <div class="strip-barcode" id="barcode"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <a class="back-link" href="index.html">← back to the card</a>
+
+</div>
+
+<script>
+  // Barcode bars
+  const bc=document.getElementById('barcode');
+  for(let i=0;i<32;i++){const bar=document.createElement('div');bar.className='bar';bar.style.height=(6+Math.random()*16)+'px';bar.style.opacity=0.4+Math.random()*0.6;bc.appendChild(bar);}
+
+  // Bubbles
+  function spawnBubble(){const b=document.createElement('div');b.className='bubble';const sz=4+Math.random()*12;b.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;bottom:-20px;animation-duration:${7+Math.random()*10}s;animation-delay:${Math.random()*2}s;opacity:${0.2+Math.random()*0.4};`;document.body.appendChild(b);setTimeout(()=>b.remove(),20000);}
+  setInterval(spawnBubble,900);
+
+  // Jellyfish
+  const jColors=[['#c8f0ff','#29b6e8','#024f7a','rgba(100,210,255,0.8)'],['#e0f8ff','#56c8f5','#02608a','rgba(126,232,250,0.8)'],['#b0eaff','#0ea5e9','#013d60','rgba(80,190,240,0.8)']];
+  function spawnJelly(){const el=document.createElement('div');el.className='jelly-swimmer';const sz=35+Math.random()*50;const[c1,c2,c3,tc]=jColors[Math.floor(Math.random()*3)];const id='g'+Math.random().toString(36).slice(2);el.innerHTML=`<svg viewBox="0 0 130 130" width="${sz}" height="${sz}" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="${id}" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="${c1}"/><stop offset="55%" stop-color="${c2}"/><stop offset="100%" stop-color="${c3}"/></radialGradient></defs><g class="jelly-body"><ellipse cx="65" cy="52" rx="43" ry="37" fill="url(#${id})" opacity="0.9"/><ellipse cx="50" cy="43" rx="10" ry="6" fill="rgba(255,255,255,0.2)"/><path d="M 22 52 Q 30 76 65 79 Q 100 76 108 52" fill="${c1}44" stroke="${c1}88" stroke-width="1"/><path d="M 42 77 Q 35 93 39 111" fill="none" stroke="${tc}" stroke-width="2" stroke-linecap="round"/><path d="M 65 80 Q 65 98 65 114" fill="none" stroke="${tc}" stroke-width="2.5" stroke-linecap="round"/><path d="M 88 77 Q 95 93 91 111" fill="none" stroke="${tc}" stroke-width="2" stroke-linecap="round"/><circle cx="55" cy="52" r="3.5" fill="rgba(255,255,255,0.9)"/><circle cx="75" cy="52" r="3.5" fill="rgba(255,255,255,0.9)"/><circle cx="56" cy="52" r="1.8" fill="${c3}"/><circle cx="76" cy="52" r="1.8" fill="${c3}"/><path d="M 59 59 Q 65 64 71 59" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/></g></svg>`;
+  el.style.left=(5+Math.random()*85)+'%';el.style.bottom='-150px';const dur=14+Math.random()*18;el.style.animationDuration=dur+'s';el.style.animationDelay=(Math.random()*3)+'s';el.style.opacity=0.4+Math.random()*0.55;document.body.appendChild(el);setTimeout(()=>el.remove(),(dur+5)*1000);}
+  setInterval(spawnJelly,2800);[0,800,1600].forEach(d=>setTimeout(spawnJelly,d));
+
+  // Tick boxes
+  const toastEl=document.getElementById('toast');let toastTimer;
+  function showToast(msg){toastEl.textContent=msg;toastEl.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.classList.remove('show'),2800);}
+  const messages=['Use #1 redeemed! u want me to buy you food? a hug?','Use #2 redeemed! once redeemed no refunds!','Use #3 redeemed! This is the last one, better be something good'];
+  function tickBox(n){const box=document.getElementById('box'+n);if(box.classList.contains('used'))return;box.classList.add('used');box.animate([{transform:'scale(1.25) rotate(-6deg)'},{transform:'scale(0.93) rotate(4deg)'},{transform:'scale(1.06) rotate(-1deg)'},{transform:'scale(1) rotate(0deg)'}],{duration:480,easing:'ease-out'});showToast(messages[n-1]);}
+</script>
+</body>
+</html>
